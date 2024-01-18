@@ -1,0 +1,19 @@
+name: Update Readme
+
+on:
+  schedule:
+    - cron: '0 3 * * *'  # Schedule at 3:00 AM UTC every day
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Script
+        run: |
+          chmod +x ./autoupdate.sh
+          ./autoupdate.sh
+
