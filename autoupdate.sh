@@ -3,7 +3,6 @@
 length=10
 random_string=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c "$length")
 
-cd /home/dvip/Documents/updateReadme
 
 # Check if the 'cd' command was successful
 if [ $? -ne 0 ]; then
