@@ -14,10 +14,18 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.email "dvipatwork@outlook.com"
-          git config --global user.name "dvip1"
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
 
       - name: Run Script
         run: |
           chmod +x ./autoupdate.sh
           ./autoupdate.sh
+
+      - name: Push changes
+        run: |
+          git add .
+          git commit -m "Update readme"
+          git push origin main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
