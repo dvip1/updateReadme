@@ -32,8 +32,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Push changes to the 'main' branch
-git push origin main
-
+git push git@github.com:dvip1/updateReadme.git main
 # Check if 'git push' was successful
 if [ $? -ne 0 ]; then
     echo "Error: Unable to push changes to the 'main' branch."
