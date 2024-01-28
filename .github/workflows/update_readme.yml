@@ -2,7 +2,7 @@ name: Update Readme
 
 on:
   schedule:
-    - cron: '0 3 * * *'  # Schedule at 3:00 AM UTC every day
+    - cron: "0 3 * * *" # Schedule at 3:00 AM UTC every day
 
 jobs:
   build:
@@ -10,22 +10,29 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Configure Git
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
+          git config --global user.email "dvipatwork@outlook.com"
+          git config --global user.name "dvip1"
 
       - name: Run Script
         run: |
           chmod +x ./autoupdate.sh
           ./autoupdate.sh
 
-      - name: Push changes
+      - name: Check for changes
+        id: changes
         run: |
-          git add .
-          git commit -m "Update readme"
-          git push origin main
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git diff --exit-code && echo "No changes to commit" || echo "::set-output name=changed::true"
+        continue-on-error: true
+
+      - name: Commit and push if changed
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: "Update readme"
+          branch: main
+          force_push: true
